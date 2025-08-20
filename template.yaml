@@ -31,14 +31,14 @@ Resources:
           Properties:
             Path: /stop-all-instances
             Method: GET
-      Metadata:
-        BuildMethod: esbuild
-        BuildProperties:
-          Minify: true
-          Target: node22
-          Sourcemap: false
-          External:
-            - aws-sdk
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: node22
+        Sourcemap: false
+        External:
+          - aws-sdk
   getAllInstancesHandler:
     Type: AWS::Serverless::Function
     Properties:
@@ -63,14 +63,14 @@ Resources:
           Properties:
             Path: /get-all-instances
             Method: GET
-      Metadata:
-        BuildMethod: esbuild
-        BuildProperties:
-          Minify: true
-          Target: node22
-          Sourcemap: false
-          External:
-            - aws-sdk
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: node22
+        Sourcemap: false
+        External:
+          - aws-sdk
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
