@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "devDependencies": {
+        "esbuild": "^0.25.8",
         "jest": "^29.2.1"
     },
     "scripts": {
