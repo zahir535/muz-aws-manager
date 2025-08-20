@@ -1,8 +1,9 @@
 // File: src/get-all-instances/get-all-instances.js
 import { EC2Client, DescribeInstancesCommand } from "@aws-sdk/client-ec2";
 
+const ec2 = new EC2Client({ region: "ap-southeast-1" });
+
 export const getAllInstancesHandler = async (event) => {
-  const ec2 = new EC2Client({ region: "ap-southeast-1" });
   try {
     // 1. Get all running instances
     const describeCmd = new DescribeInstancesCommand({});

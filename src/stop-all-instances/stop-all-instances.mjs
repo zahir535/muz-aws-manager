@@ -5,9 +5,9 @@ import {
   StopInstancesCommand,
 } from "@aws-sdk/client-ec2";
 
-export const stopAllInstancesHandler = async () => {
-  const ec2 = new EC2Client({ region: "ap-southeast-1" });
+const ec2 = new EC2Client({ region: "ap-southeast-1" });
 
+export const stopAllInstancesHandler = async () => {
   try {
     // 1. Get all running instances
     const describeCmd = new DescribeInstancesCommand({

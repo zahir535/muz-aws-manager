@@ -1,9 +1,9 @@
 // File: src/start-instance/start-instance.js
 import { EC2Client, StartInstancesCommand } from "@aws-sdk/client-ec2";
 
-export const startInstanceHandler = async (event) => {
-  const ec2 = new EC2Client({ region: "ap-southeast-1" });
+const ec2 = new EC2Client({ region: "ap-southeast-1" });
 
+export const startInstanceHandler = async (event) => {
   try {
     // Parse instanceId from query string or JSON body
     let instanceId;
