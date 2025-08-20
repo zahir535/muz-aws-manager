@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   muz-aws-manager
 Transform:
-- AWS::Serverless-2016-10-31
+  - AWS::Serverless-2016-10-31
 
 Resources:
   # Lambda function
@@ -103,6 +103,39 @@ Resources:
         Sourcemap: false
         External:
           - aws-sdk
+  getLambdaInsightHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/get-lambda-insight/
+      Handler: get-lambda-insight.getLambdaInsightHandler
+      Runtime: nodejs22.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A Lambda function that get lambda insight of selected lambda group.
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - logs:StartQuery
+                - logs:GetQueryResults
+              Resource: "arn:aws:logs:ap-southeast-1:260866268487:log-group:/aws/lambda/*"
+      Events:
+        ApiGatewayEndpoint: # Link to API Gateway
+          Type: Api
+          Properties:
+            Path: /get-lambda-insight
+            Method: POST
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: node22
+        Sourcemap: false
+        External:
+          - aws-sdk
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
@@ -117,7 +150,7 @@ Resources:
     Properties:
       ResourceGroupName:
         Ref: ApplicationResourceGroup
-      AutoConfigurationEnabled: 'true'
+      AutoConfigurationEnabled: "true"
 
 Globals:
   Function:
