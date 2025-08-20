@@ -71,6 +71,38 @@ Resources:
         Sourcemap: false
         External:
           - aws-sdk
+  startInstancesHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/start-instance/
+      Handler: start-instance.startInstanceHandler
+      Runtime: nodejs22.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A Lambda function that start an EC2 instance based on instanceId.
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ec2:StartInstances
+              Resource: "*"
+      Events:
+        ApiGatewayEndpoint: # Link to API Gateway
+          Type: Api
+          Properties:
+            Path: /start-instance
+            Method: GET
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: node22
+        Sourcemap: false
+        External:
+          - aws-sdk
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
