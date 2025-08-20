@@ -39,6 +39,38 @@ Resources:
           Sourcemap: false
           External:
             - aws-sdk
+  getAllInstancesHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/get-all-instances/
+      Handler: get-all-instances.getAllInstancesHandler
+      Runtime: nodejs22.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A Lambda function that get all EC2 instances.
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ec2:DescribeInstances
+              Resource: "*"
+      Events:
+        ApiGatewayEndpoint: # Link to API Gateway
+          Type: Api
+          Properties:
+            Path: /get-all-instances
+            Method: GET
+      Metadata:
+        BuildMethod: esbuild
+        BuildProperties:
+          Minify: true
+          Target: node22
+          Sourcemap: false
+          External:
+            - aws-sdk
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
