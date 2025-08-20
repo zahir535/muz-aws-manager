@@ -136,6 +136,39 @@ Resources:
         Sourcemap: false
         External:
           - aws-sdk
+  getAccountBillingHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/get-account-billing/
+      Handler: get-account-billing.getAccountBillingHandler
+      Runtime: nodejs22.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A Lambda function that get cost breakdown of the account.
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ce:GetCostAndUsage
+                - ce:GetCostForecast
+              Resource: "*"
+      Events:
+        ApiGatewayEndpoint: # Link to API Gateway
+          Type: Api
+          Properties:
+            Path: /get-billing
+            Method: GET
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: node22
+        Sourcemap: false
+        External:
+          - aws-sdk
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
